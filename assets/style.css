@@ -1,0 +1,43 @@
+/* add header styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 25px 0;
+}
+
+#intro-quiz {
+  text-align: center;
+}
+
+.start-button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+} 
+
+.start-button {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50;
+}
+
+.start-button:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+/* make styling for button */
