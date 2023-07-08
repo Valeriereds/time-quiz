@@ -41,3 +41,6 @@ header {
   color: white;
 }
 /* make styling for button */
+.hide-me {
+  display: none;
+}
