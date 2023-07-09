@@ -10,7 +10,9 @@
 // todo high score
 // separate html/javascript/css for hs page
 // todo add to answer-me tag for correct/incorrect answer
-
+var rateMe = document.getElementById("highscore-list");
+var highScores = scoreSheet.length;
+var scoreSheet = [];
 
 
 // Create needed variables for questions/answers
@@ -98,16 +100,41 @@ function tickMeOff() {
 function saveScore() {
   var initials = holdMe.value;
   score.push(["user: " + initials, "score: " + score, "time left: " + clockIn]);
-  console.log(score);
-  console.log('Score:', timeMe)
   if (timeMe > score) {
     score = timeMe;
-    console.log("New High Score: ", score);
   }
   localStorage.setItem("High scores", JSON.stringify(score));
 };
 
+function saveScore() {
+  var initialHere = initials.value;
+  var totalScore =  {
+    Initials: initialHere,
+    Score: score,
+    Time: clockIn
+  };
+  scoreSheet.push(totalScore);
+  localStorage.setItem("highscores", JSON.stringify(scoreSheet));
+};
 
+
+// this function lists the scores on the screen and connects to the other JS
+function highList() {
+  for (var i = 0; i < scoreSheet.length; i++) {
+    var highScores = scoreSheet[i];
+      var listMe = document.createElement("li");
+      listMe.textContent = highScores.Initials + " your score is " + highScores.Score + " out of 4";
+      rateMe.appendChild(li);
+    }
+  }
+  function showNtell() {
+    var saveMe = JSON.parse(localStorage.getItem("Highscores"));
+  if (saveMe != null) {
+    scoreSheet = saveMe;
+  }
+  highList()
+}
+showNtell()
 // function to move along questions
 function nextQuest() {
   quizMe.textContent = "";
@@ -138,7 +165,6 @@ function nextQuestion() {
     endQuiz();
   }
 };
-// function to check answers
 function runotGlad(event) {
   if (event.target.textContent == questLove[currQuest].correctMe) {
     nextQuestion() 
@@ -149,11 +175,11 @@ function runotGlad(event) {
   
 }
 
-
 // start quiz button
 startQuiz.addEventListener("click", function(event) {
   startGame();
 }
 )
+// function to check answers
 
 
