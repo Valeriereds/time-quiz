@@ -1,7 +1,7 @@
-// todo stop questions from cycling
-// todo function to stop game itself
-// todo to add the timer
-// todo add decrement to timer when incorrect answer
+//  stop questions from cycling
+// function to stop game itself
+//  to add the timer
+//  add decrement to timer when incorrect answer
 // conditional statement for this
 // todo add end time count to scoreboard
 // local storage
@@ -19,24 +19,28 @@
 var quizMe = document.querySelector(".quiz-me");
 var inTro = document.querySelector(".intro");
 var startQuiz = document.querySelector(".start-button");
-var quizHead = document.querySelector(".quiz")
-var tronQuiz = document.querySelector("#intro-quiz")
+var quizHead = document.querySelector(".quiz");
+var tronQuiz = document.querySelector("#intro-quiz");
 var checkIt = document.querySelector(".checkit-out");
 var timeMe = 75;
 var clockIn;
-var timeTravel = document.getElementById("timer")
+var timeTravel = document.getElementById("timer");
+var killMe = document.getElementById("quiz-begin");
+var holdMe = document.getElementById("initials");
+var score = [];
+var submitToMe = document.getElementById("submit");
+var finEnd = document.getElementById("Highscores")
+var scoreMe;
+
+finEnd.style.display = "none";
+submitToMe.style.display = "none";
+holdMe.style.display = "none";
+// timeTravel.style.display = "none";
+
 // We will need event listeners for the question/answer transition
 // refer to event listener activities
 // var quesOne = document.querySelector("quesOne");
-
-function tickMeOff() {
-  timeMe--;
-  timeTravel.textContent = "Time: " + timeMe;
-  // if (timeMe <= 0) {
-  //     // saveScore();
-  // }
-}
-
+submitToMe.addEventListener("click", saveScore)
 
 quizHead.textContent = "Coding Quiz Challenge";
 inTro.textContent = "Prepared to burn your brain out into mush? Try your knowledge with this data coding quiz. Choose wisely! For every incorrect answer, the timer will deduct 15 seconds."
@@ -65,6 +69,45 @@ var questLove =  [
 ];
 
 var currQuest = 0;
+function startGame(){
+  clockIn = setInterval(tickMeOff, 1000);
+  var checkIt = document.querySelector(".checkit-out");
+  quizMe.textContent = questLove[currQuest].quesTion;
+  checkIt.innerHTML = "";
+  tronQuiz.classList.add("hide-me");
+  nextQuest();
+  tickMeOff();
+}
+
+function endQuiz() {
+  clearInterval(clockIn);
+  scoreMe = timeMe;
+  killMe.style.display = "none";
+  finEnd.style.display = "block";
+  holdMe.style.display = "block";
+  submitToMe.style.display = "block";
+  questLove.textContent = "Your score is " + score + " out of 100, with " + timeMe + " seconds left. Enter your initials and click submit to save your score!";
+};
+function tickMeOff() {
+  timeMe--;
+  timeTravel.textContent = "Time: " + timeMe;
+  if (timeMe <= 0) {
+    saveScore();
+  }
+}
+
+function saveScore() {
+  var initials = holdMe.value;
+  score.push(["user: " + initials, "score: " + score, "time left: " + clockIn]);
+  console.log(score);
+  console.log('Score:', timeMe)
+  if (timeMe > score) {
+    score = timeMe;
+    console.log("New High Score: ", score);
+  }
+  localStorage.setItem("High scores", JSON.stringify(score));
+};
+
 
 // add event listener to toggle from intro to first question
 // need to make a for loop to cycle through ul array for ques/ans
@@ -76,7 +119,7 @@ function nextQuest() {
   for (i = 0; i <questLove[currQuest].ansWers.length; i++) {
     var checkList = document.querySelector(".checkit-out");
     var addMe = document.createElement("li");
-    var hitMe = document.createElement("button")
+    var hitMe = document.createElement("button");
     hitMe.addEventListener("click", function(event) {
       runotGlad(event)
     })
@@ -89,33 +132,34 @@ function nextQuest() {
     addMe.appendChild(hitMe);
   }
 }
+function nextQuestion() {
+  if (currQuest < questLove.length -1) {
+    currQuest++;
+    nextQuest();
+  } else {
+    endQuiz();
+  }
+};
 
 function runotGlad(event) {
   if (event.target.textContent == questLove[currQuest].correctMe) {
-    currQuest++;
-    nextQuest() 
+    nextQuestion() 
   } else {
-
+    timeMe -= 15;
+    nextQuestion();
   }
+  
 }
 
 
 // attach items in the array to html to swap out easily
-function startGame(){
-clockIn = setInterval(tickMeOff, 1000);
-var checkIt = document.querySelector(".checkit-out");
-quizMe.textContent = questLove[currQuest].quesTion;
-checkIt.innerHTML = "";
-tronQuiz.classList.add("hide-me");
-nextQuest();
-tickMeOff();
-}
 
 
 startQuiz.addEventListener("click", function(event) {
   startGame();
 }
 )
+
 // write conditional statement to stop at the end of the array
 // function to  stop game
 // var firstChildUl = document.getElementById("first-child-ul");
@@ -130,25 +174,7 @@ startQuiz.addEventListener("click", function(event) {
 
 // },
 // {
-//     q: "What is the capital of Thailand?",
-//     a: [{ text: "Lampang", isCorrect: false, isSelected: false },
-//     { text: "Phuket", isCorrect: false },
-//     { text: "Ayutthaya", isCorrect: false },
-//     { text: "Bangkok", isCorrect: true }
-//     ]
- 
-//   },
-//   {
-//     q: "What is the capital of Gujarat",
-//     a: [{ text: "Surat", isCorrect: false },
-//     { text: "Vadodara", isCorrect: false },
-//     { text: "Gandhinagar", isCorrect: true },
-//     { text: "Rajkot", isCorrect: false }
-//     ]
-    
-//   }
-// ]
-
+  
   
   
   // 
