@@ -37,9 +37,6 @@ submitToMe.style.display = "none";
 holdMe.style.display = "none";
 // timeTravel.style.display = "none";
 
-// We will need event listeners for the question/answer transition
-// refer to event listener activities
-// var quesOne = document.querySelector("quesOne");
 submitToMe.addEventListener("click", saveScore)
 
 quizHead.textContent = "Coding Quiz Challenge";
@@ -69,6 +66,7 @@ var questLove =  [
 ];
 
 var currQuest = 0;
+// function to start game
 function startGame(){
   clockIn = setInterval(tickMeOff, 1000);
   var checkIt = document.querySelector(".checkit-out");
@@ -78,7 +76,7 @@ function startGame(){
   nextQuest();
   tickMeOff();
 }
-
+// function to end game
 function endQuiz() {
   clearInterval(clockIn);
   scoreMe = timeMe;
@@ -88,6 +86,7 @@ function endQuiz() {
   submitToMe.style.display = "block";
   questLove.textContent = "Your score is " + score + " out of 100, with " + timeMe + " seconds left. Enter your initials and click submit to save your score!";
 };
+// function for timer
 function tickMeOff() {
   timeMe--;
   timeTravel.textContent = "Time: " + timeMe;
@@ -95,7 +94,7 @@ function tickMeOff() {
     saveScore();
   }
 }
-
+// function to save score
 function saveScore() {
   var initials = holdMe.value;
   score.push(["user: " + initials, "score: " + score, "time left: " + clockIn]);
@@ -109,9 +108,7 @@ function saveScore() {
 };
 
 
-// add event listener to toggle from intro to first question
-// need to make a for loop to cycle through ul array for ques/ans
-// needs to be inside a function to start game
+// function to move along questions
 function nextQuest() {
   quizMe.textContent = "";
   checkIt.textContent = "";
@@ -132,6 +129,7 @@ function nextQuest() {
     addMe.appendChild(hitMe);
   }
 }
+// function to move along questions
 function nextQuestion() {
   if (currQuest < questLove.length -1) {
     currQuest++;
@@ -140,7 +138,7 @@ function nextQuestion() {
     endQuiz();
   }
 };
-
+// function to check answers
 function runotGlad(event) {
   if (event.target.textContent == questLove[currQuest].correctMe) {
     nextQuestion() 
@@ -152,45 +150,10 @@ function runotGlad(event) {
 }
 
 
-// attach items in the array to html to swap out easily
-
-
+// start quiz button
 startQuiz.addEventListener("click", function(event) {
   startGame();
 }
 )
 
-// write conditional statement to stop at the end of the array
-// function to  stop game
-// var firstChildUl = document.getElementById("first-child-ul");
-// need to add buttons for answers
 
-
-
-
-
-
-
-
-// },
-// {
-  
-  
-  
-  // 
-  
-  // if (startQuiz) {
-  //   firstQue.textContent = "What is an Array?";
-  //   form.style.display = 'none';
-  // }
-  
-  // function startQuest() {
-//   isWin = false;
-//   timerCount = 75;
-//   // Prevents start button from being clicked when round is in progress
-//   startButton.disabled = true;
-//   startTimer()
-// }
-// we will need set and clearInterval for timer
-// we're gonna need if/else statements for the evilistener
-// timer needs to decrease for every wrong answer, should these be apart of the if/else statements
